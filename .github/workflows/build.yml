@@ -41,6 +41,10 @@ jobs:
 
         cd ./susfs4ksu
 
+        # fontes
+        cp ./kernel_patches/fs/susfs.c ../fs/
+        cp ./kernel_patches/include/linux/susfs.h ../include/linux/
+
         # patches
         cp ./kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ../KernelSU-Next
 
@@ -56,8 +60,6 @@ jobs:
 
         cd ../common
         patch -p1 --ignore-whitespace -i 50_add_susfs_in_gki-android13-5.10.patch
-
-        ls 
 
     - name: build/compile
       run: |
