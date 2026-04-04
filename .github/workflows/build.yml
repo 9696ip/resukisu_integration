@@ -39,6 +39,8 @@ jobs:
 
         git clone -b gki-android13-5.10 --single-branch https://gitlab.com/simonpunk/susfs4ksu.git
 
+        ls -a
+
         cd ./susfs4ksu
 
         # fontes
