@@ -27,6 +27,12 @@ jobs:
 
         repo --trace sync -c -j$(nproc --all) --no-tags --fail-fast
 
+    - name: ksu_integration
+      run: |
+        cd "$KERNEL"
+
+        curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -
+
     - name: build/compile
       run: |
         cd "$KERNEL"
