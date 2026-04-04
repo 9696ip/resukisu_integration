@@ -9,9 +9,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: install_dependences
-      run: |
-        apt-get install git
-
     - name: git -v
       run: git -v
