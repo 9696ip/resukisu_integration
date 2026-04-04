@@ -31,8 +31,7 @@ jobs:
       run: |
         cd "$KERNEL"
 
-        curl -LSs "https://raw.githubusercontent.com/pershoot/KernelSU-Next/refs/heads/next-susfs/kernel/setup.sh" \
-  | bash -s next-susfs
+        curl -LSs "https://raw.githubusercontent.com/pershoot/KernelSU-Next/refs/heads/next-susfs/kernel/setup.sh" | bash -s next-susfs
 
     - name: susfs
       run: |
