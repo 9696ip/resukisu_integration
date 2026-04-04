@@ -52,10 +52,10 @@ jobs:
 
         #patch
         cd ../KernelSU-Next
-        patch -p1 -ui --fuzz=3 < 10_enable_susfs_for_ksu.patch
+        patch -p1 -ui < 10_enable_susfs_for_ksu.patch
 
         cd ../common
-        patch -p1 -ui --fuzz=3 < 50_add_susfs_in_gki-android13-5.10.patch
+        patch -p1 -ui < 50_add_susfs_in_gki-android13-5.10.patch
 
         ls 
 
