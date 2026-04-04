@@ -41,18 +41,20 @@ jobs:
 
         ls -a
 
-        cd susfs4ksu
+        cd susfs4ksu/kernel_patches
 
         ls -a
 
+        cd KernelSU && ls -a
+
         # patches
-        cp ./kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ../../KernelSU-Next
+        #cp ./kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ../../KernelSU-Next
 
-        cp ./kernel_patches/50_add_susfs_in_gki-android13-5.10.patch ../common/
+        #cp ./kernel_patches/50_add_susfs_in_gki-android13-5.10.patch ../common/
 
-        cp ./kernel_patches/fs/* ../common/fs/
+        #cp ./kernel_patches/fs/* ../common/fs/
 
-        cp ./kernel_patches/include/linux/* ../common/include/linux/
+        #cp ./kernel_patches/include/linux/* ../common/include/linux/
 
         #patch
         cd "$KERNEL/KernelSU-Next"
