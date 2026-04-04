@@ -4,11 +4,16 @@ on:
   push:
     branches: [main]
 
+env:
+  KERNEL: "${{ github.workspace }}/kernel"
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v4
+    
     - name: install_packages
       run: |
         sudo apt install git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig repo
@@ -24,7 +29,7 @@ jobs:
 
     - name: build/compile
       run: |
-        ls -a
+        cd "$KERNEL"
         
         LTO=thin BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
 
