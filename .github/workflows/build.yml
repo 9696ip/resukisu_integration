@@ -1,0 +1,17 @@
+name: ksu_integration
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: install_dependences
+      run: |
+        apt install git
+
+    - name: git -v
+      run: git -v
