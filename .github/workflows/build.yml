@@ -57,7 +57,7 @@ jobs:
         cd "$KERNEL/common"
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
 
-        ls -a
+        ls 
 
     - name: build/compile
       run: |
