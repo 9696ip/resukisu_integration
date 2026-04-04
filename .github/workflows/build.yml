@@ -22,13 +22,9 @@ jobs:
 
         repo --trace sync -c -j$(nproc --all) --no-tags --fail-fast
 
-        ls -a
-
-        cd build && ls -a
-
     - name: build/compile
       run: |
-        # sla
+        LTO=thin BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
 
 
     
