@@ -39,10 +39,10 @@ jobs:
 
         git clone -b gki-android13-5.10 --single-branch https://gitlab.com/simonpunk/susfs4ksu.git
 
-        cd susfs4ksu/kernel_patches/KernelSU
-        ls -a
+        cd ./susfs4ksu
+
         # patches
-        #cp ./kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ../../KernelSU-Next
+        cp ./kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ../../KernelSU-Next
 
         #cp ./kernel_patches/50_add_susfs_in_gki-android13-5.10.patch ../common/
 
