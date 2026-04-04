@@ -33,11 +33,33 @@ jobs:
 
         curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -
 
+    - name: susfs
+      run: |
+        cd "$KERNEL"
+
+        git clone -b gki-android13-5.10 --single-brach https://gitlab.com/simonpunk/susfs4ksu.git
+
+        # patches
+        cp ./kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch "$KERNEL/KernelSU"
+
+        cp ./kernel_patches/50_add_susfs_in_gki-android13-5.10.patch "$KERNEL/common/"
+
+        cp ./kernel_patches/fs/* "$KERNEL/common/fs/"
+
+        cp ./kernel_patches/include/linux/* "$KERNEL/common/include/linux/"
+
+        #patch
+        cd "$KERNEL/KernelSU"
+        patch -p1 < 10_enable_susfs_for_ksu.patch
+
+        cd "$KERNEL/common"
+        patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
+
     - name: build/compile
       run: |
         cd "$KERNEL"
         
-        LTO=thin BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
+        #LTO=thin BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
 
 
     
