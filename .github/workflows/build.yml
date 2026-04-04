@@ -35,7 +35,7 @@ jobs:
 
     - name: susfs
       run: |
-        cd "$KERNEL"
+        cd "$KERNEL/common"
 
         git clone -b gki-android13-5.10 --single-branch https://gitlab.com/simonpunk/susfs4ksu.git
 
