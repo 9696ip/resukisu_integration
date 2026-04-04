@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: install_dependences
       run: |
-        apt install git
+        apt-get install git
 
     - name: git -v
       run: git -v
