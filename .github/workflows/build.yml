@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: install_packages
       run: |
-        apt install repo -y
+        sudo apt install repo -y
           
     - name: get kernel
       run: |
