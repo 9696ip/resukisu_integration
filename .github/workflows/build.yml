@@ -18,7 +18,7 @@ jobs:
         mkdir ./kernel && cd ./kernel
 
         # get kernel
-        repo init --depth=1 -u https://android.googlesource.com/kernel/manifest -b common-android13-5.10-2024-11
+        repo init --depth=1 -u https://android.googlesource.com/kernel/manifest -b android13-5.10-2024-11
 
         repo --trace sync -c -j$(nproc --all) --no-tags --fail-fast
 
