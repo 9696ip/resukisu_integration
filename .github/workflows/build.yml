@@ -35,9 +35,11 @@ jobs:
 
     - name: susfs
       run: |
-        cd "$KERNEL/common"
+        cd "$KERNEL"
 
         git clone -b gki-android13-5.10 --single-branch https://gitlab.com/simonpunk/susfs4ksu.git
+
+        cd ./common && ls -a
 
         # patches
         cp ./kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch "$KERNEL/KernelSU"
