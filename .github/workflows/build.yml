@@ -56,10 +56,10 @@ jobs:
 
         #patch
         cd ../KernelSU
-        patch -p1 --fuzz=3 --ignore-whitespace -i 10_enable_susfs_for_ksu.patch
+        patch -p1 < 10_enable_susfs_for_ksu.patch
 
         cd ../common
-        patch -p1 --fuzz=3 --ignore-whitespace -i 50_add_susfs_in_gki-android13-5.10.patch
+        patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
 
     - name: build/compile
       run: |
