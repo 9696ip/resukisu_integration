@@ -41,6 +41,8 @@ jobs:
 
         cd ./susfs4ksu
 
+        ls
+
         # fontes
         cp ./kernel_patches/fs/susfs.c ../fs/
         cp ./kernel_patches/include/linux/susfs.h ../include/linux/
