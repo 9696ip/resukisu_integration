@@ -64,10 +64,11 @@ jobs:
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
 
     - name: build/compile
+      if: aways()
       run: |
         cd "$KERNEL"
         
-        #LTO=thin BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
+        LTO=thin BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
 
 
     
