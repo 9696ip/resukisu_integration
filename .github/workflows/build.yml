@@ -48,7 +48,7 @@ jobs:
         cp ./kernel_patches/fs/susfs.c fs/
         cp ./kernel_patches/include/linux/susfs.h include/linux/
 
-
+        #
         # patches
         cp ./kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ../KernelSU
 
