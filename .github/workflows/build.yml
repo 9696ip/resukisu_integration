@@ -43,7 +43,7 @@ jobs:
 
         curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/susfs-ksud/kernel/setup.sh" | bash
 
-    - name: fix vm_flags_clear compatibility for kernel 5.10
+    - name: fix_vm_flags_clear_compatibility
       run: |
         cd "$KERNEL"
         
@@ -57,7 +57,6 @@ jobs:
 
         cd ./susfs4ksu
 
-        # patches
         #cp ./kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ../KernelSU
 
         cp ./kernel_patches/50_add_susfs_in_gki-android13-5.10.patch ../common/
@@ -66,19 +65,18 @@ jobs:
 
         cp ./kernel_patches/include/linux/* ../common/include/linux/
 
-        #patch
-        cd ../KernelSU
+        #cd ../KernelSU
         #patch -p1 < 10_enable_susfs_for_ksu.patch
 
         cd ../common
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
-      continue-on-error: true
 
-    - name: Debug Kconfig after patch
+    - name: fix_wifi
       run: |
         cd "$KERNEL"
-
-        cat ./common/drivers/kernelsu/Kconfig
+        
+        rm -rf ./common/android/abi_gki_protected_exports_aarch64
+        rm -rf ./common/android/abi_gki_protected_exports_x86_64
         
     - name: create_config_fragment
       run: |
@@ -94,8 +92,6 @@ jobs:
     - name: build/compile
       run: |
         cd "$KERNEL"
-        
-        #tools/bazel build --config=fast --lto=thin //common:kernel_aarch64
 
         SKIP_MRPROPER=1 LTO=thin SKIP_EXT_MODULES=1 SKIP_CP_KERNEL_HDR=1 GKI_DEFCONFIG_FRAGMENT="./common/arch/arm64/configs/ksu.fragment" BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
 
