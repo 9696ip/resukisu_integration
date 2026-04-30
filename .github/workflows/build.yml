@@ -76,16 +76,8 @@ jobs:
       continue-on-error: true
         
     - name: add_hooks
-      if: false
       run: |
         cd "$KERNEL"
-
-        cat >> ./common/arch/arm64/configs/gki_defconfig << 'EOF'
-        CONFIG_KPM=y
-        CONFIG_KSU_TOOLKIT_SUPPORT=y
-        CONFIG_KSU=y
-        CONFIG_KSU_SUSFS=y
-        EOF
 
         cat >> ./common/arch/arm64/configs/defconfig << 'EOF'
         CONFIG_KPM=y
@@ -93,13 +85,6 @@ jobs:
         CONFIG_KSU=y
         CONFIG_KSU_SUSFS=y
         EOF
-
-    - name: add_configs
-      run: |
-        cd "$KERNEL"
-
-        cp -r ../defconfig ./common/arch/arm64/configs/
-        cp -r ../gki_defconfig ./common/arch/arm64/configs
 
     - name: build/compile
       run: |
