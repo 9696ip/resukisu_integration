@@ -81,7 +81,6 @@ jobs:
 
         cat >> ./common/arch/arm64/configs/gki_defconfig << 'EOF'
         CONFIG_KPM=y
-        CONFIG_KALLSYMS=y
         CONFIG_KSU_TOOLKIT_SUPPORT=y
         CONFIG_KSU=y
         CONFIG_KSU_SUSFS=y
@@ -89,7 +88,6 @@ jobs:
 
         cat >> ./common/arch/arm64/configs/defconfig << 'EOF'
         CONFIG_KPM=y
-        CONFIG_KALLSYMS=y
         CONFIG_KSU_TOOLKIT_SUPPORT=y
         CONFIG_KSU=y
         CONFIG_KSU_SUSFS=y
