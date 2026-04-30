@@ -51,6 +51,7 @@ jobs:
         sed -i 's/vm_flags_clear(new_vma, VM_PAD_MASK);/new_vma->vm_flags \&= ~VM_PAD_MASK;/' ./common/mm/mmap.c
 
     - name: susfs
+      if: false
       run: |
         cd "$KERNEL"
 
@@ -85,7 +86,6 @@ jobs:
           CONFIG_KALLSYMS_ALL=y
           CONFIG_KSU_TOOLKIT_SUPPORT=y
           CONFIG_KSU=y
-          CONFIG_KSU_SUSFS=y
         "
         echo "$CONFIGS" >> ./common/arch/arm64/configs/gki_defconfig
 
