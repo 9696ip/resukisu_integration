@@ -34,6 +34,10 @@ jobs:
 
         #curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/main/kernel/setup.sh" | bash
 
+    - name: Fix vm_flags_clear compatibility for kernel 5.10
+      run: |
+        sed -i 's/vm_flags_clear(\(.*\), \(.*\));/\1->vm_flags \&= ~\2;/g' \ $KERNEL/common/mm/mmap.c
+
     - name: susfs
       if: false
       run: |
