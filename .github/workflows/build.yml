@@ -73,9 +73,25 @@ jobs:
 
         cd ../common
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
+      continue-on-error: true
+        
+    - name: add_hooks
+      run: |
+        cd "$KERNEL"
+
+        CONFIGS="
+          CONFIG_KPM=y
+          CONFIG_KALLSYMS=y
+          CONFIG_KALLSYMS_ALL=y
+          CONFIG_KSU_TOOLKIT_SUPPORT=y
+          CONFIG_KSU=y
+          CONFIG_KSU_SUSFS=y
+        "
+        echo "$CONFIGS" >> ./common/arch/arm64/configs/gki_defconfig
+
+        echo "$CONFIGS" >> ./common/arch/arm64/configs/defconfig
 
     - name: build/compile
-      if: always()
       run: |
         cd "$KERNEL"
         
