@@ -94,6 +94,13 @@ jobs:
         CONFIG_KSU_SUSFS=y
         EOF
 
+    - name: add_configs
+      run: |
+        cd "$KERNEL"
+
+        cp -r ../defconfig ./common/arch/arm64/configs/
+        cp -r ../gki_defconfig ./common/arch/arm64/configs
+
     - name: build/compile
       run: |
         cd "$KERNEL"
