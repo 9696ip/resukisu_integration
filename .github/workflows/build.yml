@@ -76,7 +76,7 @@ jobs:
       run: |
         cd "$KERNEL"
         
-        tools/bazel build --config=fast --lto=thin //common:kernel_aarch64_dist
+        tools/bazel build --config=fast --lto=thin //common:kernel_aarch64
 
 
     
