@@ -37,16 +37,8 @@ jobs:
     - name: Fix vm_flags_clear compatibility for kernel 5.10
       run: |
         cd "$KERNEL"
-
-        cd ./common
-
-        ls -a
-
-        cd ./mm
-
-        ls -a
         
-        #sed -i 's/vm_flags_clear(\(.*\), \(.*\));/\1->vm_flags \&= ~\2;/g' \ ./common/mm/mmap.c
+        sed -i 's/vm_flags_clear(new_vma, VM_PAD_MASK);/new_vma->vm_flags \&= ~VM_PAD_MASK;/' ./common/mm/mmap.c
 
     - name: susfs
       if: false
