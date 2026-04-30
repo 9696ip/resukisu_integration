@@ -43,7 +43,7 @@ jobs:
 
         curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/susfs-ksud/kernel/setup.sh" | bash
 
-    - name: Fix vm_flags_clear compatibility for kernel 5.10
+    - name: fix vm_flags_clear compatibility for kernel 5.10
       run: |
         cd "$KERNEL"
         
@@ -80,11 +80,11 @@ jobs:
         cd "$KERNEL"
 
         CONFIGS="
-          CONFIG_KPM=y
-          CONFIG_KALLSYMS=y
-          CONFIG_KALLSYMS_ALL=y
-          CONFIG_KSU_TOOLKIT_SUPPORT=y
-          CONFIG_KSU=y
+        CONFIG_KPM=y
+        CONFIG_KALLSYMS=y
+        CONFIG_KALLSYMS_ALL=y
+        CONFIG_KSU_TOOLKIT_SUPPORT=y
+        CONFIG_KSU=y
         "
         echo "$CONFIGS" >> ./common/arch/arm64/configs/gki_defconfig
 
