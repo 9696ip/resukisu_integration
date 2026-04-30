@@ -76,7 +76,6 @@ jobs:
       continue-on-error: true
         
     - name: create_config_fragment
-      if: false
       run: |
         cd "$KERNEL"
 
