@@ -39,7 +39,6 @@ jobs:
         repo --trace sync -c -j$(nproc --all) --no-tags --fail-fast
 
     - name: ksu_integration
-      if: false
       run: |
         cd "$KERNEL"
 
@@ -52,7 +51,6 @@ jobs:
         sed -i 's/vm_flags_clear(new_vma, VM_PAD_MASK);/new_vma->vm_flags \&= ~VM_PAD_MASK;/' ./common/mm/mmap.c
 
     - name: susfs
-      if: false
       run: |
         cd "$KERNEL"
 
@@ -88,7 +86,6 @@ jobs:
         cd "$KERNEL"
         
         tools/bazel build --config=fast --lto=thin //common:kernel_aarch64
-        #
 
 
     
