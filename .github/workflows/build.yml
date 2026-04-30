@@ -36,7 +36,8 @@ jobs:
 
     - name: Fix vm_flags_clear compatibility for kernel 5.10
       run: |
-        #sed -i 's/vm_flags_clear(\(.*\), \(.*\));/\1->vm_flags \&= ~\2;/g' \ ./kernel/common/mm/mmap.c
+        cd "$KERNEL"
+        #sed -i 's/vm_flags_clear(\(.*\), \(.*\));/\1->vm_flags \&= ~\2;/g' \ ./common/mm/mmap.c
 
         ls -a
 
