@@ -90,7 +90,16 @@ jobs:
       run: |
         cd "$KERNEL"
         
-        tools/bazel build --config=fast --lto=thin //common:kernel_aarch64
+        #tools/bazel build --config=fast --lto=thin //common:kernel_aarch64
+
+        tools/bazel build \
+        --config=fast \
+        --lto=thin \
+        --kconfig_add=CONFIG_KPM=y \
+        --kconfig_add=CONFIG_KSU_TOOLKIT_SUPPORT=y \
+        --kconfig_add=CONFIG_KSU=y \
+        --kconfig_add=CONFIG_KSU_SUSFS=y \
+        //common:kernel_aarch64_dist
 
 
     
