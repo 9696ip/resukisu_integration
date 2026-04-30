@@ -76,6 +76,7 @@ jobs:
       continue-on-error: true
         
     - name: add_hooks
+      if: false
       run: |
         cd "$KERNEL"
 
