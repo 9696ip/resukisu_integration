@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: free disk space       
+    - name: free_disk_space       
       uses: jlumbroso/free-disk-space@main
       with:
         tool-cache: false
@@ -29,11 +29,10 @@ jobs:
       run: |
         sudo apt install git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig repo
           
-    - name: get kernel
+    - name: get_kernel
       run: |
         mkdir ./kernel && cd ./kernel
 
-        # get kernel
         repo init --depth=1 -u https://android.googlesource.com/kernel/manifest -b common-android13-5.10-2024-11
 
         repo --trace sync -c -j$(nproc --all) --no-tags --fail-fast
@@ -50,7 +49,7 @@ jobs:
         
         sed -i 's/vm_flags_clear(new_vma, VM_PAD_MASK);/new_vma->vm_flags \&= ~VM_PAD_MASK;/' ./common/mm/mmap.c
 
-    - name: susfs
+    - name: susfs_integration
       if: false
       run: |
         cd "$KERNEL"
