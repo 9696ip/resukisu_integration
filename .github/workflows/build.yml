@@ -41,7 +41,7 @@ jobs:
       run: |
         cd "$KERNEL"
 
-        curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/main/kernel/setup.sh" | bash
+        curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/susfs-ksud/kernel/setup.sh" | bash
 
     - name: Fix vm_flags_clear compatibility for kernel 5.10
       run: |
