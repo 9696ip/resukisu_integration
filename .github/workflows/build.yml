@@ -75,12 +75,12 @@ jobs:
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
       continue-on-error: true
         
-    - name: add_hooks
+    - name: create_config_fragment
       if: false
       run: |
         cd "$KERNEL"
 
-        cat >> ./common/arch/arm64/configs/defconfig << 'EOF'
+        cat > ./common/arch/arm64/configs/ksu.fragment << 'EOF'
         CONFIG_KPM=y
         CONFIG_KSU_TOOLKIT_SUPPORT=y
         CONFIG_KSU=y
@@ -93,14 +93,7 @@ jobs:
         
         #tools/bazel build --config=fast --lto=thin //common:kernel_aarch64
 
-        tools/bazel build \
-        --config=fast \
-        --lto=thin \
-        --kconfig_add=CONFIG_KPM=y \
-        --kconfig_add=CONFIG_KSU_TOOLKIT_SUPPORT=y \
-        --kconfig_add=CONFIG_KSU=y \
-        --kconfig_add=CONFIG_KSU_SUSFS=y \
-        //common:kernel_aarch64
+        tools/bazel build --config=fast --lto=thin --notrim --defconfig_fragment=//common:arch/arm64/configs/ksu.fragment //common:kernel_aarch64
 
 
     
