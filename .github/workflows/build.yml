@@ -69,7 +69,7 @@ jobs:
         cd "$KERNEL"
         
         #LTO=thin BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
-        tools/bazel build --config=fast //common:kernel_aarch64_dist
+        tools/bazel build --config=fast --lto=thin //common:kernel_aarch64_dist
 
 
     
