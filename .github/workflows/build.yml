@@ -81,11 +81,28 @@ jobs:
     - name: fix_export_symbols
       run: |
         cd "$KERNEL"
-        
-        sed -i '/^bool susfs_is_current_ksu_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_ksu_domain);\n}' ./common/drivers/kernelsu/selinux/selinux.c
-        sed -i '/^bool susfs_is_current_zygote_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_zygote_domain);\n}' ./common/drivers/kernelsu/selinux/selinux.c
-        sed -i '/^bool susfs_is_current_init_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_init_domain);\n}' ./common/drivers/kernelsu/selinux/selinux.c
-        grep -n "EXPORT_SYMBOL" ./common/drivers/kernelsu/selinux/selinux.c
+
+        SELINUX_FILE="./common/drivers/kernelsu/selinux/selinux.c"
+    
+        # Verificar se o arquivo existe
+        if [ ! -f "$SELINUX_FILE" ]; then
+          echo "ERRO: Arquivo selinux.c não encontrado!"
+          find ./common/drivers/kernelsu -name "*.c" -type f
+          exit 1
+        fi
+    
+        # Adicionar exports no final do arquivo usando echo (mais simples e sem heredoc)
+        echo "" >> "$SELINUX_FILE"
+        echo "/* SUSFS exports */" >> "$SELINUX_FILE"
+        echo "EXPORT_SYMBOL(susfs_is_current_ksu_domain);" >> "$SELINUX_FILE"
+        echo "EXPORT_SYMBOL(susfs_is_current_zygote_domain);" >> "$SELINUX_FILE"
+        echo "EXPORT_SYMBOL(susfs_is_current_init_domain);" >> "$SELINUX_FILE"
+    
+        echo "Conteúdo final do arquivo:"
+        tail -5 "$SELINUX_FILE"
+    
+        echo "Verificando todos os EXPORT_SYMBOL:"
+        grep -n "EXPORT_SYMBOL(susfs" "$SELINUX_FILE"
 
     - name: fix_erros
       run: |
