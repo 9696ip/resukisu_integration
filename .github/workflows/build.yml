@@ -99,7 +99,9 @@ jobs:
         sed -i 's/vm_flags_clear(new_vma, VM_PAD_MASK);/new_vma->vm_flags \&= ~VM_PAD_MASK;/' ./common/mm/mmap.c
 
         echo 'CFLAGS_susfs.o += -Wno-unused-function -Wno-unused-variable' >> ./common/fs/Makefile
-    
+
+        printf '\n#ifdef CONFIG_KSU_SUSFS\nextern bool susfs_is_current_ksu_domain(void);\nextern bool susfs_is_current_zygote_domain(void);\nextern bool susfs_is_current_init_domain(void);\n#endif\n' >> ./common/include/linux/susfs.h
+        
     - name: build/compile
       run: |
         cd "$KERNEL"
