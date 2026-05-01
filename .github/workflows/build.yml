@@ -106,7 +106,7 @@ jobs:
       run: |
         cd "$KERNEL"
         
-        cat ./common/drivers/kernelsu/Kbuild
+        grep -n -A5 -B5 "susfs_is_current_ksu_domain" $./common/drivers/kernelsu/selinux/selinux.c
         
         #echo 'obj-y += selinux/' >> ./common/drivers/kernelsu/Makefile && echo 'obj-y += selinux.o' >> ./common/drivers/kernelsu/selinux/Makefile
     
