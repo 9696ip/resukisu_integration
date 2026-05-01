@@ -158,6 +158,7 @@ jobs:
 
         ls -a ./out/
         ls -a ./out/android13-5.10
+        ls -a ./out/android13-5.10/common
         ls -a ./out/android13-5.10/dist
 
     - name: upload_anykernel3
