@@ -47,7 +47,7 @@ jobs:
       run: |
         cd "$KERNEL"
 
-        git clone -b gki-android13-5.10 --single-branch https://gitlab.com/simonpunk/susfs4ksu.git
+        git clone -b gki-android13-5.10 --single-branch https://github.com/ShirkNeko/susfs4ksu.git
 
         cd ./susfs4ksu
 
@@ -100,7 +100,7 @@ jobs:
 
         echo 'CFLAGS_susfs.o += -Wno-unused-function -Wno-unused-variable' >> ./common/fs/Makefile
 
-        printf '\n#ifdef CONFIG_KSU_SUSFS\nextern bool susfs_is_current_ksu_domain(void);\nextern bool susfs_is_current_zygote_domain(void);\nextern bool susfs_is_current_init_domain(void);\n#endif\n' >> ./common/include/linux/susfs.h
+        #printf '\n#ifdef CONFIG_KSU_SUSFS\nextern bool susfs_is_current_ksu_domain(void);\nextern bool susfs_is_current_zygote_domain(void);\nextern bool susfs_is_current_init_domain(void);\n#endif\n' >> ./common/include/linux/susfs.h
         
     - name: build/compile
       run: |
