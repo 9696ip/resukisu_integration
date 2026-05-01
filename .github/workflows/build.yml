@@ -106,7 +106,11 @@ jobs:
       run: |
         cd "$KERNEL"
         # Verifica se selinux.o está incluído
-         grep -n "selinux" ./common/drivers/kernelsu/Makefile
+        cd ./common/drivers
+
+        ls -a
+        
+         #grep -n "selinux" ./common/drivers/kernelsu/Makefile
     
     - name: build/compile
       run: |
