@@ -138,6 +138,7 @@ jobs:
         cat ./common/arch/arm64/configs/ksu.fragment
 
     - name: check_build_sh
+      if: always()
       run: |
         cd "$KERNEL"
         
