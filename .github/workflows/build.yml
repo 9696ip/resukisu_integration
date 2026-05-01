@@ -82,15 +82,9 @@ jobs:
       run: |
         cd "$KERNEL"
         
-        sed -i '/^bool susfs_is_current_ksu_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_ksu_domain);
-        }' ./common/drivers/kernelsu/selinux/selinux.c
-        
-        sed -i '/^bool susfs_is_current_zygote_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_zygote_domain);
-        }' ./common/drivers/kernelsu/selinux/selinux.c
-        
-        sed -i '/^bool susfs_is_current_init_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_init_domain);
-        }' ./common/drivers/kernelsu/selinux/selinux.c
-
+        sed -i '/^bool susfs_is_current_ksu_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_ksu_domain);\n}' ./common/drivers/kernelsu/selinux/selinux.c
+        sed -i '/^bool susfs_is_current_zygote_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_zygote_domain);\n}' ./common/drivers/kernelsu/selinux/selinux.c
+        sed -i '/^bool susfs_is_current_init_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_init_domain);\n}' ./common/drivers/kernelsu/selinux/selinux.c
         grep -n "EXPORT_SYMBOL" ./common/drivers/kernelsu/selinux/selinux.c
 
     - name: fix_erros
@@ -104,8 +98,19 @@ jobs:
     - name: build/compile
       run: |
         cd "$KERNEL"
-
-        SKIP_MRPROPER=1 LTO=thin SKIP_EXT_MODULES=1 SKIP_CP_KERNEL_HDR=1 GKI_DEFCONFIG_FRAGMENT="./common/arch/arm64/configs/ksu.fragment" BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh
+        
+        export SKIP_MRPROPER=1
+        export LTO=thin
+        export SKIP_EXT_MODULES=1
+        export SKIP_CP_KERNEL_HDR=1
+        export GKI_DEFCONFIG_FRAGMENT="./common/arch/arm64/configs/ksu.fragment"
+        export BUILD_CONFIG=common/build.config.gki.aarch64
+        
+        build/build.sh 2>&1 | tee build.log || {
+            echo "Build falhou, verificando logs..."
+            grep -i "error" build.log
+            exit 1
+        }
 
     - name: create_anykernel3
       run: |
@@ -127,7 +132,7 @@ jobs:
         no_magisk_check=1
         EOF
 
-        cd anyKernel3
+        cd anykernel3
 
         zip -r9 ../ReSukiSU.zip . -x "*.git*"
 
