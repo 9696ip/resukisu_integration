@@ -65,6 +65,14 @@ jobs:
         cd ../common
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
 
+    - name: Check susfs integration
+      run: |
+        cd "$KERNEL"
+        
+        grep -rn "susfs_is_current_ksu_domain" ./common/drivers/kernelsu/
+
+        ls ./common/drivers/kernelsu/
+
     - name: fix_wifi
       run: |
         cd "$KERNEL"
