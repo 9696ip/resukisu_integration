@@ -41,7 +41,7 @@ jobs:
       run: |
         cd "$KERNEL"
 
-        curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/susfs-ksud/kernel/setup.sh" | bash
+        curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/susfs-ksud/kernel/setup.sh" | head -20
 
     - name: susfs_integration
       run: |
@@ -88,6 +88,7 @@ jobs:
         CONFIG_KPM=y
         CONFIG_KSU_TOOLKIT_SUPPORT=y
         CONFIG_KSU=y
+        CONFIG_SUSFS=y
         CONFIG_KSU_SUSFS=y
         EOF
 
@@ -116,7 +117,7 @@ jobs:
         cp -r "$KERNEL/out/android13-5.10/dist/Image" ./anykernel3
 
         cat > ./anykernel3/anykernel.sh << 'EOF'
-        kernel.string=ReSukiSU Android13 5.10
+        kernel.string=ReSukiSU Android13 5.10.223
         do.devicecheck=0
         do.modules=0
         do.cleanup=1
@@ -124,6 +125,7 @@ jobs:
         is_slot_device=auto;
         ramdisk_compression=auto;
         . tools/ak3-core.sh;
+        no_magisk_check=1
         EOF
 
         cd AnyKernel3
