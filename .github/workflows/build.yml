@@ -122,12 +122,17 @@ jobs:
         export GKI_DEFCONFIG_FRAGMENT="./common/arch/arm64/configs/ksu.fragment"
         export BUILD_CONFIG=common/build.config.gki.aarch64
         
-        build/build.sh 2>&1 | tee build.log || {
-            echo "Build falhou, verificando logs..."
-            grep -i "error" build.log
-            exit 1
-        }
+        build/build.sh 2>&1 | tee build.log
 
+    - name: check_config_after_build
+      if: always()
+      run: |
+        echo "=== .config KSU ==="
+        grep "KSU\|SUSFS" $KERNEL/out/android13-5.10/common/.config 2>/dev/null || echo "NAO ENCONTRADO"
+    
+        echo "=== Fragment ==="
+        cat $KERNEL/common/arch/arm64/configs/ksu.fragment
+    
     - name: create_anykernel3
       if: false
       run: |
