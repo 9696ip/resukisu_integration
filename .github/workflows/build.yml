@@ -51,6 +51,8 @@ jobs:
 
         cd ./susfs4ksu
 
+        ls ./kernel_patches/include/linux
+
         #cp ./kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ../KernelSU
 
         cp -r ./kernel_patches/50_add_susfs_in_gki-android13-5.10.patch ../common/
