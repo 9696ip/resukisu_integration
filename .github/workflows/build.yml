@@ -105,9 +105,10 @@ jobs:
     - name: fix_selinux_makefile
       run: |
         cd "$KERNEL"
-        # Verifica se selinux.o está incluído
         
-         grep -n "selinux" ./common/drivers/kernelsu/Makefile
+        cat ./common/drivers/kernelsu/Makefile
+        
+        echo 'obj-y += selinux/' >> ./common/drivers/kernelsu/Makefile && echo 'obj-y += selinux.o' >> ./common/drivers/kernelsu/selinux/Makefile
     
     - name: build/compile
       run: |
