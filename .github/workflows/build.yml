@@ -87,10 +87,9 @@ jobs:
       run: |
         cd "$KERNEL"
 
-        # fix vm_flags
         sed -i 's/vm_flags_clear(new_vma, VM_PAD_MASK);/new_vma->vm_flags \&= ~VM_PAD_MASK;/' ./common/mm/mmap.c
         
-        sed -i 's/size_t copied_size = 0;/size_t copied_size __attribute__((unused)) = 0;/' ./common/fs/susfs.c
+        sed -i 's/size_t copied_size = 0;/size_t copied_size __attribute__((unused)) = 0;/' ./common/fs/susfs.c && sed -i 's/static int copy_config_to_buf/static __maybe_unused int copy_config_to_buf/' ./common/fs/susfs.c
 
     - name: build/compile
       run: |
