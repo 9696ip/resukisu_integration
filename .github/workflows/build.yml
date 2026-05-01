@@ -109,7 +109,9 @@ jobs:
         #cat ./common/drivers/kernelsu/Kbuild
         #echo 'obj-y += selinux/' >> ./common/drivers/kernelsu/Makefile && echo 'obj-y += selinux.o' >> ./common/drivers/kernelsu/selinux/Makefile
 
-        printf 'EXPORT_SYMBOL(susfs_is_current_ksu_domain);\nEXPORT_SYMBOL(susfs_is_current_zygote_domain);\nEXPORT_SYMBOL(susfs_is_current_init_domain);\n' >> ./common/drivers/kernelsu/selinux/selinux.c
+        run: grep -n "susfs_is_current_ksu_domain" $KERNEL/common/include/linux/susfs.h
+
+        cat ./common/include/linux/susfs.h
     
     - name: build/compile
       run: |
