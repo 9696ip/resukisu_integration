@@ -102,6 +102,12 @@ jobs:
 
         echo 'CFLAGS_susfs.o += -Wno-unused-function -Wno-unused-variable' >> ./common/fs/Makefile
 
+    - name: fix_selinux_makefile
+      run: |
+        cd "$KERNEL"
+        # Verifica se selinux.o está incluído
+         grep -n "selinux" ./common/drivers/kernelsu/Makefile
+    
     - name: build/compile
       run: |
         cd "$KERNEL"
