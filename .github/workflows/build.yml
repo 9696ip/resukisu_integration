@@ -136,6 +136,12 @@ jobs:
     
         echo "=== Fragment ==="
         cat ./common/arch/arm64/configs/ksu.fragment
+
+    - name: check_build_sh
+      run: |
+        cd "$KERNEL"
+        
+        grep -n "GKI_DEFCONFIG_FRAGMENT" ./build/build.sh | head -10
     
     - name: create_anykernel3
       if: false
