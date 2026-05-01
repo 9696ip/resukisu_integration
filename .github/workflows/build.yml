@@ -51,8 +51,6 @@ jobs:
 
         cd ./susfs4ksu
 
-        ls ./kernel_patches/include/linux
-
         #cp ./kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ../KernelSU
 
         cp -r ./kernel_patches/50_add_susfs_in_gki-android13-5.10.patch ../common/
@@ -66,14 +64,6 @@ jobs:
 
         cd ../common
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
-
-    - name: Check susfs integration
-      run: |
-        cd "$KERNEL"
-        
-        grep -rn "susfs_is_current_ksu_domain" ./common/drivers/kernelsu/
-
-        ls ./common/drivers/kernelsu/
 
     - name: fix_wifi
       run: |
@@ -99,21 +89,8 @@ jobs:
         cd "$KERNEL"
 
         sed -i 's/vm_flags_clear(new_vma, VM_PAD_MASK);/new_vma->vm_flags \&= ~VM_PAD_MASK;/' ./common/mm/mmap.c
-        
-        #sed -i 's/size_t copied_size = 0;/size_t copied_size __attribute__((unused)) = 0;/' ./common/fs/susfs.c && sed -i 's/static int copy_config_to_buf/static __maybe_unused int copy_config_to_buf/' ./common/fs/susfs.c
 
         echo 'CFLAGS_susfs.o += -Wno-unused-function -Wno-unused-variable' >> ./common/fs/Makefile
-
-    - name: fix_selinux_makefile
-      run: |
-        cd "$KERNEL"
-        
-        #cat ./common/drivers/kernelsu/Kbuild
-        #echo 'obj-y += selinux/' >> ./common/drivers/kernelsu/Makefile && echo 'obj-y += selinux.o' >> ./common/drivers/kernelsu/selinux/Makefile
-
-        cd ./common/include/linux
-
-        ls -a
     
     - name: build/compile
       run: |
