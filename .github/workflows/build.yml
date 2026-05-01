@@ -129,7 +129,6 @@ jobs:
         }
 
     - name: create_anykernel3
-      if: false
       run: |
         cd ${{ github.workspace }}
 
@@ -165,7 +164,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ReSukiSU-AnyKernel3
-        path: ReSukiSU-*.zip
+        path: ReSukiSU.zip
     
 
     
