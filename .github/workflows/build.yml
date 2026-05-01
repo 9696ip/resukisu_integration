@@ -65,24 +65,12 @@ jobs:
         cd ../common
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
 
-    - name: fix_susfs_linking
-      run: |
-        cd "$KERNEL"
-        
-        # Exporta as funções do ReSukiSU
-        grep -q "EXPORT_SYMBOL(susfs_is_current_ksu_domain)" ./common/drivers/kernelsu/selinux/selinux.c || \
-        printf '\nEXPORT_SYMBOL(susfs_is_current_ksu_domain);\nEXPORT_SYMBOL(susfs_is_current_zygote_domain);\nEXPORT_SYMBOL(susfs_is_current_init_domain);\n' >> ./common/drivers/kernelsu/selinux/selinux.c
+        #fix_susfs_linking
+        #grep -q "EXPORT_SYMBOL(susfs_is_current_ksu_domain)" ./common/drivers/kernelsu/selinux/selinux.c || \
+        #printf '\nEXPORT_SYMBOL(susfs_is_current_ksu_domain);\nEXPORT_SYMBOL(susfs_is_current_zygote_domain);\nEXPORT_SYMBOL(susfs_is_current_init_domain);\n' >> ./common/drivers/kernelsu/selinux/selinux.c
 
         # Declara no header
-        printf '\nextern bool susfs_is_current_ksu_domain(void);\nextern bool susfs_is_current_zygote_domain(void);\nextern bool susfs_is_current_init_domain(void);\n' >> ./common/include/linux/susfs.h
-
-    - name: check_susfs
-      run: |
-        cd "$KERNEL"
-
-        ls -a ./common/include/linux
-
-        cat ./common/include/linux/susfs.h
+        #printf '\nextern bool susfs_is_current_ksu_domain(void);\nextern bool susfs_is_current_zygote_domain(void);\nextern bool susfs_is_current_init_domain(void);\n' >> ./common/include/linux/susfs.h
 
     - name: fix_wifi
       run: |
@@ -95,13 +83,7 @@ jobs:
       run: |
         cd "$KERNEL"
 
-        cat > ./common/arch/arm64/configs/ksu.fragment << 'EOF'
-        CONFIG_KPM=y
-        CONFIG_KSU_TOOLKIT_SUPPORT=y
-        CONFIG_KSU=y
-        CONFIG_SUSFS=y
-        CONFIG_KSU_SUSFS=y
-        EOF
+        printf 'CONFIG_KPM=y\nCONFIG_KSU_TOOLKIT_SUPPORT=y\nCONFIG_KSU=y\nCONFIG_KSU_SUSFS=y\n' > ./common/arch/arm64/configs/ksu.fragment
 
     - name: fix_erros
       run: |
