@@ -79,7 +79,6 @@ jobs:
         printf 'CONFIG_KPM=y\nCONFIG_KSU_TOOLKIT_SUPPORT=y\nCONFIG_KSU=y\nCONFIG_KSU_SUSFS=y\n' > ./common/arch/arm64/configs/ksu.fragment
 
     - name: fix_export_symbols
-      if: false
       run: |
         cd "$KERNEL"
         
