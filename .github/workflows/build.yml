@@ -109,7 +109,7 @@ jobs:
         #cat ./common/drivers/kernelsu/Kbuild
         #echo 'obj-y += selinux/' >> ./common/drivers/kernelsu/Makefile && echo 'obj-y += selinux.o' >> ./common/drivers/kernelsu/selinux/Makefile
 
-        run: grep -n "susfs_is_current_ksu_domain" $KERNEL/common/include/linux/susfs.h
+        run: grep -n "susfs_is_current_ksu_domain" ./common/include/linux/susfs.h
 
         cat ./common/include/linux/susfs.h
     
