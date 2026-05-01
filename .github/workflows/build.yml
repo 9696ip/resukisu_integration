@@ -130,6 +130,7 @@ jobs:
         }
 
     - name: create_anykernel3
+      if: false
       run: |
         cd ${{ github.workspace }}
 
@@ -152,6 +153,12 @@ jobs:
         cd anykernel3
 
         zip -r9 ../ReSukiSU.zip . -x "*.git*"
+
+    - name: finde_image
+      run: |
+        cd "$KERNEL"
+
+        ls -a ./out/
 
     - name: upload_anykernel3
       uses: actions/upload-artifact@v4
