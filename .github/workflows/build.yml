@@ -65,8 +65,10 @@ jobs:
         cd ../common
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
 
-    - name: Fix susfs linking
+    - name: fix_susfs_linking
       run: |
+        cd "$KERNEL"
+        
         # Exporta as funções do ReSukiSU
         grep -q "EXPORT_SYMBOL(susfs_is_current_ksu_domain)" ./common/drivers/kernelsu/selinux/selinux.c || \
         printf '\nEXPORT_SYMBOL(susfs_is_current_ksu_domain);\nEXPORT_SYMBOL(susfs_is_current_zygote_domain);\nEXPORT_SYMBOL(susfs_is_current_init_domain);\n' >> ./common/drivers/kernelsu/selinux/selinux.c
