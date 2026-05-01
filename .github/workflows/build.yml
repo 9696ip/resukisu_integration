@@ -91,7 +91,6 @@ jobs:
           exit 1
         fi
     
-        # Adicionar exports no final do arquivo usando echo (mais simples e sem heredoc)
         echo "" >> "$SELINUX_FILE"
         echo "/* SUSFS exports */" >> "$SELINUX_FILE"
         echo "EXPORT_SYMBOL(susfs_is_current_ksu_domain);" >> "$SELINUX_FILE"
@@ -159,6 +158,7 @@ jobs:
         cd "$KERNEL"
 
         ls -a ./out/
+        ls -a ./out/dist
 
     - name: upload_anykernel3
       uses: actions/upload-artifact@v4
