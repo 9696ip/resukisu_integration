@@ -127,11 +127,13 @@ jobs:
     - name: check_config_after_build
       if: always()
       run: |
+        cd "$KERNEL"
+        
         echo "=== .config KSU ==="
-        grep "KSU\|SUSFS" $KERNEL/out/android13-5.10/common/.config 2>/dev/null || echo "NAO ENCONTRADO"
+        grep "KSU\|SUSFS" ./out/android13-5.10/common/.config 2>/dev/null || echo "NAO ENCONTRADO"
     
         echo "=== Fragment ==="
-        cat $KERNEL/common/arch/arm64/configs/ksu.fragment
+        cat ./common/arch/arm64/configs/ksu.fragment
     
     - name: create_anykernel3
       if: false
