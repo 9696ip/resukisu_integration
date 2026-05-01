@@ -41,7 +41,7 @@ jobs:
       run: |
         cd "$KERNEL"
 
-        curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/susfs-ksud/kernel/setup.sh" | head -20
+        curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/susfs-ksud/kernel/setup.sh" | bash
 
     - name: susfs_integration
       run: |
