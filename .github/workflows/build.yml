@@ -85,6 +85,21 @@ jobs:
 
         printf 'CONFIG_KPM=y\nCONFIG_KSU_TOOLKIT_SUPPORT=y\nCONFIG_KSU=y\nCONFIG_KSU_SUSFS=y\n' > ./common/arch/arm64/configs/ksu.fragment
 
+    - name: Fix export symbols
+      run: |
+        cd "$KERNEL"
+        
+        sed -i '/^bool susfs_is_current_ksu_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_ksu_domain);
+        }' ./common/drivers/kernelsu/selinux/selinux.c
+        
+        sed -i '/^bool susfs_is_current_zygote_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_zygote_domain);
+        }' ./common/drivers/kernelsu/selinux/selinux.c
+        
+        sed -i '/^bool susfs_is_current_init_domain(void)$/,/^}$/{/^}$/a EXPORT_SYMBOL(susfs_is_current_init_domain);
+        }' ./common/drivers/kernelsu/selinux/selinux.c
+
+        grep -n "EXPORT_SYMBOL" ./common/drivers/kernelsu/selinux/selinux.c
+
     - name: fix_erros
       run: |
         cd "$KERNEL"
