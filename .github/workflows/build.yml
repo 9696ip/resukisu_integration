@@ -39,7 +39,7 @@ jobs:
 
     - name: ksu_integration
       run: |
-        cd "$KERNEL"
+        cd "$KERNEL/common"
 
         curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/susfs-ksud/kernel/setup.sh" | bash
 
@@ -65,13 +65,6 @@ jobs:
         cd ../common
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
 
-        #fix_susfs_linking
-        #grep -q "EXPORT_SYMBOL(susfs_is_current_ksu_domain)" ./common/drivers/kernelsu/selinux/selinux.c || \
-        #printf '\nEXPORT_SYMBOL(susfs_is_current_ksu_domain);\nEXPORT_SYMBOL(susfs_is_current_zygote_domain);\nEXPORT_SYMBOL(susfs_is_current_init_domain);\n' >> ./common/drivers/kernelsu/selinux/selinux.c
-
-        # Declara no header
-        #printf '\nextern bool susfs_is_current_ksu_domain(void);\nextern bool susfs_is_current_zygote_domain(void);\nextern bool susfs_is_current_init_domain(void);\n' >> ./common/include/linux/susfs.h
-
     - name: fix_wifi
       run: |
         cd "$KERNEL"
@@ -85,7 +78,8 @@ jobs:
 
         printf 'CONFIG_KPM=y\nCONFIG_KSU_TOOLKIT_SUPPORT=y\nCONFIG_KSU=y\nCONFIG_KSU_SUSFS=y\n' > ./common/arch/arm64/configs/ksu.fragment
 
-    - name: Fix export symbols
+    - name: fix_export_symbols
+      if: false
       run: |
         cd "$KERNEL"
         
@@ -107,8 +101,6 @@ jobs:
         sed -i 's/vm_flags_clear(new_vma, VM_PAD_MASK);/new_vma->vm_flags \&= ~VM_PAD_MASK;/' ./common/mm/mmap.c
 
         echo 'CFLAGS_susfs.o += -Wno-unused-function -Wno-unused-variable' >> ./common/fs/Makefile
-
-        #printf '\n#ifdef CONFIG_KSU_SUSFS\nextern bool susfs_is_current_ksu_domain(void);\nextern bool susfs_is_current_zygote_domain(void);\nextern bool susfs_is_current_init_domain(void);\n#endif\n' >> ./common/include/linux/susfs.h
         
     - name: build/compile
       run: |
@@ -136,7 +128,7 @@ jobs:
         no_magisk_check=1
         EOF
 
-        cd AnyKernel3
+        cd anyKernel3
 
         zip -r9 ../ReSukiSU.zip . -x "*.git*"
 
