@@ -122,7 +122,9 @@ jobs:
         export GKI_DEFCONFIG_FRAGMENT="./common/arch/arm64/configs/ksu.fragment"
         export BUILD_CONFIG=common/build.config.gki.aarch64
         
+        set -o pipefail
         build/build.sh 2>&1 | tee build.log
+
 
     - name: check_config_after_build
       if: always()
