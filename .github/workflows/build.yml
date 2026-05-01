@@ -106,9 +106,9 @@ jobs:
       run: |
         cd "$KERNEL"
         
-        cat ./common/drivers/kernelsu/Makefile
+        cat $KERNEL/common/drivers/kernelsu/Kbuild
         
-        echo 'obj-y += selinux/' >> ./common/drivers/kernelsu/Makefile && echo 'obj-y += selinux.o' >> ./common/drivers/kernelsu/selinux/Makefile
+        #echo 'obj-y += selinux/' >> ./common/drivers/kernelsu/Makefile && echo 'obj-y += selinux.o' >> ./common/drivers/kernelsu/selinux/Makefile
     
     - name: build/compile
       run: |
