@@ -109,9 +109,9 @@ jobs:
         #cat ./common/drivers/kernelsu/Kbuild
         #echo 'obj-y += selinux/' >> ./common/drivers/kernelsu/Makefile && echo 'obj-y += selinux.o' >> ./common/drivers/kernelsu/selinux/Makefile
 
-        grep -n "susfs_is_current_ksu_domain" ./common/include/linux/susfs.h
+        cd ./common/include/linux
 
-        cat ./common/include/linux/susfs.h
+        ls -a
     
     - name: build/compile
       run: |
