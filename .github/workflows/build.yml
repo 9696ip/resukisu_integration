@@ -72,12 +72,6 @@ jobs:
         rm -rf ./common/android/abi_gki_protected_exports_aarch64
         rm -rf ./common/android/abi_gki_protected_exports_x86_64
         
-    - name: create_config_fragment
-      run: |
-        cd "$KERNEL"
-
-        printf 'CONFIG_KPM=y\nCONFIG_KSU_TOOLKIT_SUPPORT=y\nCONFIG_KSU=y\nCONFIG_KSU_SUSFS=y\n' > ./common/arch/arm64/configs/ksu.fragment
-
     - name: fix_erros
       run: |
         cd "$KERNEL"
@@ -95,7 +89,7 @@ jobs:
         export SKIP_EXT_MODULES=1
         export SKIP_CP_KERNEL_HDR=1
         export BUILD_CONFIG=common/build.config.gki.aarch64
-        export POST_DEFCONFIG_CMDS="./common/scripts/kconfig/merge_config.sh -m -O \${OUT_DIR} \${OUT_DIR}/.config ./common/arch/arm64/configs/ksu.fragment && make -C common O=\${OUT_DIR} olddefconfig"
+        export POST_DEFCONFIG_CMDS="./common/scripts/kconfig/merge_config.sh -m -O \${OUT_DIR} \${OUT_DIR}/.config ${{ github.workspace }}/ksu.fragment && make -C common O=\${OUT_DIR} olddefconfig"
 
         set -o pipefail
         build/build.sh 2>&1 | tee build.log
@@ -105,7 +99,7 @@ jobs:
       run: |
         cd "$KERNEL"
         
-        grep "KSU\|SUSFS" ./out/android13-5.10/common/.config 2>/dev/null || echo "NAO ENCONTRADO"
+        grep "KSU\|SUSFS\|KPM" ./out/android13-5.10/common/.config 2>/dev/null || echo "NAO ENCONTRADO"
     
         cat ./common/arch/arm64/configs/ksu.fragment
 
