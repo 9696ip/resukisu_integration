@@ -79,33 +79,12 @@ jobs:
         sed -i 's/vm_flags_clear(new_vma, VM_PAD_MASK);/new_vma->vm_flags \&= ~VM_PAD_MASK;/' ./common/mm/mmap.c
 
         echo 'CFLAGS_susfs.o += -Wno-unused-function -Wno-unused-variable' >> ./common/fs/Makefile
-
-    - name: check_kconfig_default
-      run: |
-        cd "$KERNEL"
-        
-        grep -A3 "config KSU_SUSFS" ./common/drivers/kernelsu/Kconfig
     
     - name: build_compile
       run: |
         cd "$KERNEL"
 
         SKIP_MRPROPER=1 LTO=thin SKIP_EXT_MODULES=1 SKIP_CP_KERNEL_HDR=1 GKI_DEFCONFIG_FRAGMENT="${{ github.workspace }}/ksu.fragment" BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh 2>&1 | tee build.log
-
-    - name: build/compile/CMDS
-      if: false
-      run: |
-        cd "$KERNEL"
-
-        export SKIP_MRPROPER=1
-        export LTO=thin
-        export SKIP_EXT_MODULES=1
-        export SKIP_CP_KERNEL_HDR=1
-        export BUILD_CONFIG=common/build.config.gki.aarch64
-        export POST_DEFCONFIG_CMDS="./common/scripts/kconfig/merge_config.sh -m -O \${OUT_DIR} \${OUT_DIR}/.config ${{ github.workspace }}/ksu.fragment && make -C common O=\${OUT_DIR} olddefconfig"
-
-        set -o pipefail
-        build/build.sh 2>&1 | tee build.log
   
     - name: check_config_after_build
       if: always()
