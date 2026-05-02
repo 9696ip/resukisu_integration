@@ -129,10 +129,14 @@ jobs:
         do.modules=0
         do.cleanup=1
         do.cleanuponabort=0
-        is_slot_device=auto;
-        ramdisk_compression=auto;
-        . tools/ak3-core.sh;
+        is_slot_device=auto
+        ramdisk_compression=auto
         no_magisk_check=1
+        block=auto
+        patch_vbmeta_flag=auto
+        
+        . tools/ak3-core.sh
+        . tools/boot_patch.sh "$block" 
         EOF
 
         cd anykernel3
