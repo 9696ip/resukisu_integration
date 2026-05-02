@@ -65,6 +65,14 @@ jobs:
         cd ../common
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
 
+    - name: check_build_config
+      run: |
+        cd "$KERNEL"
+        
+        grep -n "POST_DEFCONFIG_CMDS" "./common/build.config.gki.aarch64" || echo "NAO ENCONTRADO"
+
+        grep -rn "POST_DEFCONFIG_CMDS" "./common/build.config"* 2>/dev/null
+
     - name: fix_wifi
       run: |
         cd "$KERNEL"
@@ -116,7 +124,7 @@ jobs:
         
         grep "KSU\|SUSFS\|KPM" ./out/android13-5.10/common/.config 2>/dev/null || echo "NAO ENCONTRADO"
     
-        cat ./common/arch/arm64/configs/ksu.fragment
+        cat "${{ github.workspace }}/ksu.fragment"
 
     - name: finde_image
       run: |
