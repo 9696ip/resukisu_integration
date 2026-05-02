@@ -78,32 +78,6 @@ jobs:
 
         printf 'CONFIG_KPM=y\nCONFIG_KSU_TOOLKIT_SUPPORT=y\nCONFIG_KSU=y\nCONFIG_KSU_SUSFS=y\n' > ./common/arch/arm64/configs/ksu.fragment
 
-    - name: fix_export_symbols
-      if: false
-      run: |
-        cd "$KERNEL"
-
-        SELINUX_FILE="./common/drivers/kernelsu/selinux/selinux.c"
-    
-        # Verificar se o arquivo existe
-        if [ ! -f "$SELINUX_FILE" ]; then
-          echo "ERRO: Arquivo selinux.c não encontrado!"
-          find ./common/drivers/kernelsu -name "*.c" -type f
-          exit 1
-        fi
-    
-        echo "" >> "$SELINUX_FILE"
-        echo "/* SUSFS exports */" >> "$SELINUX_FILE"
-        echo "EXPORT_SYMBOL(susfs_is_current_ksu_domain);" >> "$SELINUX_FILE"
-        echo "EXPORT_SYMBOL(susfs_is_current_zygote_domain);" >> "$SELINUX_FILE"
-        echo "EXPORT_SYMBOL(susfs_is_current_init_domain);" >> "$SELINUX_FILE"
-    
-        echo "Conteúdo final do arquivo:"
-        tail -5 "$SELINUX_FILE"
-    
-        echo "Verificando todos os EXPORT_SYMBOL:"
-        grep -n "EXPORT_SYMBOL(susfs" "$SELINUX_FILE"
-
     - name: fix_erros
       run: |
         cd "$KERNEL"
@@ -146,11 +120,15 @@ jobs:
       run: |
         cd "$KERNEL"
         
-        echo "=== .config KSU ==="
         grep "KSU\|SUSFS" ./out/android13-5.10/common/.config 2>/dev/null || echo "NAO ENCONTRADO"
     
-        echo "=== Fragment ==="
         cat ./common/arch/arm64/configs/ksu.fragment
+
+    - name: finde_image
+      run: |
+        cd "$KERNEL"
+
+        find ./out -name "Image" -o -name "Image.gz" -o -name "Image.lz4" 2>/dev/null
     
     - name: create_anykernel3
       run: |
@@ -175,17 +153,6 @@ jobs:
         cd anykernel3
 
         zip -r9 ../ReSukiSU.zip . -x "*.git*"
-
-    - name: finde_image
-      run: |
-        cd "$KERNEL"
-
-        ls -a ./out/
-        ls -a ./out/android13-5.10
-        ls -a ./out/android13-5.10/common
-        ls -a ./out/android13-5.10/dist
-
-        find ./out -name "Image" -o -name "Image.gz" -o -name "Image.lz4" 2>/dev/null
 
     - name: upload_anykernel3
       uses: actions/upload-artifact@v4
