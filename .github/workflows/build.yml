@@ -31,11 +31,11 @@ jobs:
           
     - name: get_kernel
       run: |
-        mkdir -p "$KERNEL"
+        mkdir ./kernel && cd ./kernel
 
-        cd "$KERNEL" && repo init --depth=1 -u https://android.googlesource.com/kernel/manifest -b common-android13-5.10-2024-11
+        repo init --depth=1 -u https://android.googlesource.com/kernel/manifest -b common-android13-5.10-2024-11
 
-        cd "$KERNEL" && repo --trace sync -c -j$(nproc --all) --no-tags --fail-fast
+        repo --trace sync -c -j$(nproc --all) --no-tags --fail-fast
 
     - name: ksu_integration
       run: |
@@ -121,7 +121,7 @@ jobs:
 
         git clone https://github.com/osm0sis/AnyKernel3 anykernel3
 
-        cp -r "$KERNEL/out/android13-5.10/dist/Image" ./anykernel3
+        cp "$KERNEL/out/android13-5.10/dist/Image" ./anykernel3
 
         cat > ./anykernel3/anykernel.sh << 'EOF'
         kernel.string=ReSukiSU Android13 5.10.223
