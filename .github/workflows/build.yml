@@ -79,6 +79,12 @@ jobs:
         sed -i 's/vm_flags_clear(new_vma, VM_PAD_MASK);/new_vma->vm_flags \&= ~VM_PAD_MASK;/' ./common/mm/mmap.c
 
         echo 'CFLAGS_susfs.o += -Wno-unused-function -Wno-unused-variable' >> ./common/fs/Makefile
+
+    - name: check_kconfig_default
+      run: |
+        cd "$KERNEL"
+        
+        grep -A3 "config KSU_SUSFS" ./common/drivers/kernelsu/Kconfig
     
     - name: build_compile
       run: |
