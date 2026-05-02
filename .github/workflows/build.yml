@@ -117,23 +117,9 @@ jobs:
 
         cp "$KERNEL/out/android13-5.10/dist/Image" ./anykernel3
 
-        cat > ./anykernel3/anykernel.sh << 'EOF'
-        kernel.string=ReSukiSU Android13 5.10.223
-        do.devicecheck=0
-        do.modules=0
-        do.cleanup=1
-        do.cleanuponabort=0
-        is_slot_device=auto
-        ramdisk_compression=auto
-        no_magisk_check=1
-        block=auto
-        patch_vbmeta_flag=auto
-        
-        . tools/ak3-core.sh
-        . tools/boot_patch.sh "$block" 
-        EOF
-
         cd anykernel3
+
+        cp "${{ github.workspace  }}/anykernel.sh" ./
 
         zip -r9 ../ReSukiSU.zip . -x "*.git*"
 
