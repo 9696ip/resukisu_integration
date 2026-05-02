@@ -65,11 +65,15 @@ jobs:
         cd ../common
         patch -p1 < 50_add_susfs_in_gki-android13-5.10.patch
 
-    - name: check_build_config
+    - name: checks
       run: |
         cd "$KERNEL"
         
-        grep -n "GKI_DEFCONFIG_FRAGMENT" ./build/build.sh || echo "NAO SUPORTADO"
+        echo "== defconfig =="
+        grep -n "defconfig\|DEFCONFIG" ./common/build.config.gki.aarch64
+
+        echo "== outdir =="
+        grep -n "OUT_DIR" ./build/build.sh | head -20
 
     - name: fix_wifi
       run: |
