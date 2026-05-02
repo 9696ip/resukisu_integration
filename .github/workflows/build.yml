@@ -88,11 +88,24 @@ jobs:
 
         echo 'CFLAGS_susfs.o += -Wno-unused-function -Wno-unused-variable' >> ./common/fs/Makefile
 
+    - name: add_post_defconfig
+      run: |
+        cd "$KERNEL"
+        
+        echo 'POST_DEFCONFIG_CMDS="./common/scripts/kconfig/merge_config.sh -m -O ${OUT_DIR} ${OUT_DIR}/.config ${{ github.workspace }}/ksu.fragment && make -C common O=${OUT_DIR} olddefconfig"' >> ./common/build.config.gki.aarch64"
+
     - name: build_compile
       run: |
         cd "$KERNEL"
 
-        SKIP_MRPROPER=1 LTO=thin SKIP_EXT_MODULES=1 SKIP_CP_KERNEL_HDR=1 GKI_DEFCONFIG_FRAGMENT="${{ github.workspace }}/ksu.fragment" BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh 2>&1 | tee build.log
+        export SKIP_MRPROPER=1
+        export LTO=thin
+        export SKIP_EXT_MODULES=1
+        export SKIP_CP_KERNEL_HDR=1
+        export BUILD_CONFIG=common/build.config.gki.aarch64
+
+        set -o pipefail
+        build/build.sh 2>&1 | tee build.log
   
     - name: check_config_after_build
       if: always()
