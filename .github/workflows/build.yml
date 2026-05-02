@@ -69,9 +69,7 @@ jobs:
       run: |
         cd "$KERNEL"
         
-        grep -n "POST_DEFCONFIG_CMDS" "./common/build.config.gki.aarch64" || echo "NAO ENCONTRADO"
-
-        grep -rn "POST_DEFCONFIG_CMDS" "./common/build.config"* 2>/dev/null
+        grep -n "GKI_DEFCONFIG_FRAGMENT" ./build/build.sh || echo "NAO SUPORTADO"
 
     - name: fix_wifi
       run: |
