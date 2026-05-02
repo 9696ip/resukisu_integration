@@ -13,7 +13,7 @@ device.name5=
 supported.versions=
 '; }
 
-block=auto
+block=boot
 is_slot_device=auto
 ramdisk_compression=auto
 patch_vbmeta_flag=auto
