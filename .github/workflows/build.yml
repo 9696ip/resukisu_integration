@@ -43,6 +43,9 @@ jobs:
 
         curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/susfs-ksud/kernel/setup.sh" | bash
 
+    - name: check_post_defconfig
+      run: grep -n "POST_DEFCONFIG_CMDS\|GKI_DEFCONFIG_FRAGMENT\|EXTRA_CONFIGS" "$KERNEL/build/build.sh" | head -20
+
     - name: susfs_integration
       run: |
         cd "$KERNEL"
