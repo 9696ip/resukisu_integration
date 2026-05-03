@@ -88,23 +88,6 @@ jobs:
         printf "POST_DEFCONFIG_CMDS='\${ROOT_DIR}/common/scripts/config --file \${OUT_DIR}/.config -e CONFIG_KSU_SUSFS -e CONFIG_KSU_TOOLKIT_SUPPORT -e CONFIG_KPM && make -C \${ROOT_DIR}/common O=\${OUT_DIR} olddefconfig'\n" >> "./common/build.config.gki.aarch64"
         
         tail -3 "./common/build.config.gki.aarch64"
-
-    - name: commit_kernel_changes
-      run: |
-        cd "$KERNEL/common"
-
-        git config user.email "build@github.com"
-        git config user.name "GitHub Actions"
-        git add -A
-        git commit -m "Apply patches"
-
-        cd "$KERNEL"
-        git config user.email "build@github.com"
-        git config user.name "GitHub Actions"
-        git add -A
-        git commit -m "Apply patches" 2>/dev/null || true
-
-        git status
     
     - name: build_compile
       run: |
@@ -112,7 +95,7 @@ jobs:
         
         set -euo pipefail
         
-        SKIP_MRPROPER=1 LTO=thin SKIP_EXT_MODULES=1 SKIP_CP_KERNEL_HDR=1 LOCALVERSION="-ReSukiSU-[aarch64]" BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh 2>&1 | tee build.log
+        SKIP_MRPROPER=1 LTO=thin SKIP_EXT_MODULES=1 SKIP_CP_KERNEL_HDR=1 BUILD_CONFIG=common/build.config.gki.aarch64 build/build.sh 2>&1 | tee build.log
   
     - name: check_config_after_build
       run: |
