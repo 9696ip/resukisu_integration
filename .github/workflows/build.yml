@@ -87,6 +87,8 @@ jobs:
       run: |
         cd "$KERNEL/common"
 
+        # dirty
+
         git config user.email "build@github.com"
         git config user.name "GitHub Actions"
         git add -A
